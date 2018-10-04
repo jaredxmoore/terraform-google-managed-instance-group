@@ -1,5 +1,4 @@
-/*
- * Copyright 2017 Google Inc.
+opyright 2017 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,7 +68,22 @@ output network_ip {
   value       = "${var.network_ip}"
 }
 
-output health_check {
-  description = "The healthcheck for the managed instance group"
-  value       = "${element(concat(google_compute_health_check.mig-health-check.*.self_link, list("")), 0)}"
+output health_check_http {
+  description = "The http healthcheck for the managed instance group"
+  value       = "${element(concat(google_compute_health_check.mig-health-check-http.*.self_link, list("")), 0)}"
+}
+
+output health_check_https {
+  description = "The https healthcheck for the managed instance group"
+  value       = "${element(concat(google_compute_health_check.mig-health-check-https.*.self_link, list("")), 0)}"
+}
+
+output health_check_tcp {
+  description = "The tcp healthcheck for the managed instance group"
+  value       = "${element(concat(google_compute_health_check.mig-health-check-tcp.*.self_link, list("")), 0)}"
+}
+
+output health_check_ssl {
+  description = "The ssl healthcheck for the managed instance group"
+  value       = "${element(concat(google_compute_health_check.mig-health-check-ssl.*.self_link, list("")), 0)}"
 }
