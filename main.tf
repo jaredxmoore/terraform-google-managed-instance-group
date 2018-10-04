@@ -189,7 +189,7 @@ resource "google_compute_region_instance_group_manager" "default" {
 
   // Initial instance verification can take 10-15m when a health check is present.
   timeouts = {
-    create = "${var.health_check != "" ? "15m" : "5m"}"
+    create = "${var.health_check == "http" || var.health_check == "https" || var.health_check == "tcp" || var.health_check == "ssl" ? "15m" : "5m"}"
   }
 }
 
@@ -307,7 +307,6 @@ resource "google_compute_health_check" "mig-health-check-ssl" {
 }
 
 resource "google_compute_firewall" "mig-health-check" {
-  #count   = "${var.health_check || var.health_check != "" ? 1 : 0}"
   count   = "${var.health_check == "http" || var.health_check == "https" || var.health_check == "tcp" || var.health_check == "ssl" ? 1 : 0}"
   project = "${var.subnetwork_project == "" ? var.project : var.subnetwork_project}"
   name    = "${var.name}-vm-hc"
